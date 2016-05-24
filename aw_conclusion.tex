@@ -1,0 +1,152 @@
+\chapter{Conclusion}
+\label{chap:conclusion}
+%
+
+\section{Summary}
+More of the functional sequence in the human genome is devoted to \cis-regulatory elements,
+which control when during development and where in the body genes are active, than
+is in protein coding genes~\citep{Encode2011,Hsu2006}.  \textit{Cis}-regulatory elements have been connected to human
+disease and evolution~\citep{Hindorff2009,Lettice2003,McLean2011}, but the function of most \cis-regulatory elements in the human genome is
+unannotated, and the grammatical rules for how regulatory function is encoded in DNA
+sequence are unknown.  This dissertation describes two efforts to improve the annotation of
+\cis-regulatory elements in the human genome.
+
+\chapref{chap:prism} describes a breadth-based approach to annotate many regulatory
+elements (\figref{fig:prismFig3}A).  It introduces a novel ``excess conservation'' score to identify transcription factor
+binding sites conserved across species (\figref{fig:prismFig1}A).  The score explicitly compares the conservation of a
+motif match to that of the surrounding basepairs.  Binding site prediction with the excess
+conservation score outperforms state of the art methods for 44 of 47 examined transcription
+factors (\tabref{tab:prismTableS1}).  The PRISM method combines excess conservation binding site prediction with the
+GREAT functional analysis method to annotate \cis-regulatory elements and gene regulatory
+networks in the human and mouse genomes (\figref{fig:prismFig3}A).  PRISM was applied with 332 motifs for 300 unique
+transcription factors.  Across human and mouse, PRISM annotates 109,748 mostly distal binding
+sites in regulatory elements associated with 7,692 different target genes at an overall false
+discovery rate of 15\%.  The predictions span a wide range of biological processes (\figref{fig:prismFig3}E).
+
+\chapref{chap:neocortex} describes a deep look at the \cis-regulation of the developing
+mouse neocortex at embryonic day E14.5.  A set of 6,629 candidate neocortex enhancers were
+identified using ChIP-seq with an antibody to the enhancer-associated co-activator protein
+p300 in E14.5 neocortex tissue (\figref{fig:ncxFig1}A).  Eight of ten selected candidates function as neocortex-specific
+enhancers when tested in transgenic mouse enhancer assays (\figref{fig:ncxFig2}).  As a set, the candidate enhancers
+are enriched near genes expressed in the E14.5 neocortex and involved in neocortex development (\figref{fig:ncxFig1}D).
+The candidate enhancers exhibit strong evolutionary conservation (\figref{fig:ncxFig4}A).  In fact, 23\% of the enhancers
+are conserved outside of mammals, although the neocortex is a mammalian-specific structure.
+This suggests broad co-option of ancient enhancers for the purpose of patterning the neocortex.
+In Section \ref{sec:ncxNetworks}, I propose a general method for deriving gene regulatory networks from sets of
+tissue-specific enhancers identified by ChIP-seq.  While ChIP-seq in a tissue identifies enhancers associated with
+all of the multiple processes occuring simultaneously in the tissue, the combination of binding
+site prediction and GREAT functional analysis allows the identification of function-specific
+sub-networks (\figref{fig:ncxFig5}B).  Much as PRISM identifies coherent regulatory networks from the ``mass'' of
+regulation in the full genome, applying a PRISM-style approach to tissue-specific enhancers
+reveals small sub-networks involved in specific processes.  An illustrative example of a
+sub-network centered at the transcription factor \textit{Rbpj} demonstrates the concept (\figref{fig:ncxFig5}B).
+
+The importance of \cis-regulation in development, evolution, and disease has become clear
+in the genomic era~\citep{Chan2010,Hindorff2009,Lettice2003,McLean2011}.  Comparative genomic analysis has revealed the vast numbers of regulatory
+elements in the genome~\citep{Bejerano2004,Siepel2005}, clever application of high throughput sequencing in ChIP-seq
+has enabled the identification of all regions in a genome that are bound
+by a particular transcription factor or that have a particular epigenetic modification~\citep{Park2009}, and
+\textit{in vivo} and \textit{in vitro} enhancer assays have helped characterize \cis-regulatory
+function~\citep{Pennacchio2006}.  The computational genomics methods outlined in this dissertation extend such approaches in three important directions.
+First, sequence-based computational approaches are not severely limited by practical challenges
+like the number of cells in a population of interest or the duration for which a cell population
+persists (though partial annotation of such populations does limit GREAT-based analysis).  While a full experimental study of gene regulation in development
+would conceptually require separate experiments in many tissues and at many timepoints, computational
+approaches enable the study of the full process as it is encoded in the genome.  Second, computational
+approaches can extend the simple enumeration of regions from ChIP-seq into regulatory networks
+that pinpoint direct regulatory connections between transcription factors and target genes through
+\cis-regulatory elements.  Third, computational analysis allows study of \cis-regulatory evolution
+that is not readily examined experimentally.  Along with new experimental approaches,
+computational analysis promises to continue to improve our understanding of \cis-regulatory elements
+and their role in human development, disease, and evolution.
+
+\section{Future work}
+\subsection{PRISM}
+The PRISM approach relies on the availability of transcription factor motifs, accurate binding site prediction,
+and effective functional enrichment analysis of sets of \cis-regulatory regions.  There are opportunities
+to extend and improve all three aspects.
+
+The PRISM screen utilizes a large set of 332 quality motifs representing 300 transcription factors, and new methods for charactering
+transcription factor binding preferences (e.g. protein binding microarrays) promise to make many additional
+motifs available in the near future~\citep{Berger2008}.  Currently available motifs are particularly lacking for the largest
+family of transcription factors in the human genome -- the C2H2 zinc fingers (~\figref{fig:prismFig2}A).  As that family has rapidly
+expanded in the human lineage and has been understudied~\citep{Emerson2009,Nowick2011}, approaches such as PRISM could reveal many
+novel and interesting connections once the motifs are characterized.  In this way, PRISM serves as an
+example of how combining a relatively rapid and inexpensive experimental assay (PBM) with a computational
+method (PRISM) can guide time-consuming and expensive experimental studies (e.g. gene knockouts, transgenic enhancer assays).
+
+The excess conservation score identifies binding sites that are conserved more than surrounding basepairs.
+Thus, it misses true binding sites in both highly conserved regions (which do not stand out against
+the surroundings) and non-conserved, lineage-specific binding sites.  While better methods could improve the
+sensitivity of conservation-based binding site prediction, the ultimate solution is to enable
+effective single-species binding site prediction through a better understanding of \cis-regulatory grammars and
+transcription factor combinatorics.  Transcription factor motifs are short and match many more regions in the human genome
+than are bound by the transcription factor.  Cross-species comparison is a tool to identify a subset of
+motif matches that are likely to be functional binding sites~\citep{Xie2009}.  An understanding of transcription factor interactions,
+and thus the longer and more information rich motif of the resulting complex, would reduce the noise in
+single-species prediction and eventually eliminate the need to employ cross-species comparisons.  A second option is
+to employ other data in addition to sequence.  ChIP-seq, DNAse I open chromatin data, and other data sets highlight
+regions of the genome that are likely to function as regulatory elements in a particular tissue.  Such data focus
+on the relevant regions of the vast genome and thus remove much of the noise in binding site prediction.  Such experimental
+data is most informative for the tissue on which the experiment was performed, but the discovery of marks for poised
+regulatory elements suggests that an assay in one tissue is sometimes informative for others~\citep{Cotney2012}.
+
+The GREAT functional enrichment analysis method has proven to be effective for the analysis of a variety of ChIP-seq
+data sets~\citep{Lowe2011,RadaIglesias2011,Yoon2011}, and PRISM employs it effectively to annotate sets of binding site predictions.  GREAT relies
+on the rich annotation of gene function and lifts annotation from genes to associated genomic regions.  This
+approach has been necessary due to the lack of annotation of non-coding loci in the genome.  However,
+recent advances in ChIP-seq and other assays have begun to provide direct, rich annotation of non-coding loci.
+This enables a different type of statistical test to infer the function of a set of regulatory elements.  Rather
+than examining the annotations of the genes nearby the regulatory elements, it now is possible to examine the direct
+annotation of the elements~\citep{Chikina2012}.  I apply an initial version of this approach in \chapref{chap:neocortex}
+by examining the overlap of the candidate neocortex enhancers with annotated sets of genomic regions including
+DNAse I open chromatin regions and other p300 ChIP-seq datasets.  Approaches to identify genome-wide correlations of genomic
+regions will supplement approaches such as GREAT that depend on gene annotation.
+
+\subsection{Gene regulatory networks in neocortex and beyond}
+Both functional and computational genomics have advantages, and I argue that a synthesis of both is
+needed to characterize gene regulatory networks in high-throughput.  In this
+dissertation, I propose just such a synthesis.  Functional genomics ChIP-seq assays using antibodies to
+general marks of \cis-regulatory elements provide a catalog of active regulatory elements.
+Analyzing the catalogs with the computational tools developed for PRISM begins to build regulatory networks
+that identify how genes interact to regulate neocortex development.  I illustrate the approach with a regulatory
+network centered on the transcription factor \textit{Rbpj}.
+
+To extend the proposed approach beyond a single transcription factor will require the development of appropriate
+null models for functional enrichment and network connectivity.  GREAT analysis of binding site predictions in active
+regulatory elements must account for the fact that the highlighted regulatory elements have an underlying functional
+bias as a result of being identified in tissue-specific ChIP-seq.  As a first approach, the GREAT analysis could be modified to consider a partial genome of the active
+regulatory regions.  Rather than having a null hypothesis that the binding sites are randomly distributed in the
+genome, the null hypothesis would assume that the binding sites are randomly distributed in the highlighted regulatory
+elements.  Alternatively, the enrichments obtained with real transcription factor motifs could be compared to those
+for shuffled motifs.  Shuffled motifs would also provide an appropriate null model for network connectivity.  I expect
+the biological networks to have distinct structure compared to networks built from shuffled motifs.  Presumably,
+the biological networks will be more highly connected.
+
+The similarity of binding preferences for paralogous transcription factors presents an important challenge in motif-based
+study of gene regulatory elements.  The sequence of individual binding sites does not differentiate between transcription
+factors with identical or nearly identical motifs.  Gene expression data, such as RNA-seq, would help to eliminate
+factors that are not expressed in the tissue under analysis.  This becomes even more powerful as the sub-networks
+become more precise and highlight specific sub-structures with specific genes expression profiles.  Protein-protein interaction
+data also promises to help resolve ambiguity.  Adjacent binding sites in a \cis-regulatory element are more likely to be for
+interacting proteins.  Thus, even for two ambiguous binding sites, protein-protein interaction data would trim the options
+to a smaller set of interacting transcription factor pairs.  In somes cases, it might not be possible to determine which
+member of a transcription factor paralog family is binding to a particular site.  Presenting ambiguous network predictions
+to a domain expert will enable the expert to apply his or her experience and intuition to hypothesize which transcription
+factor is the likely relevant one.  Lastly, the ambiguity might in fact represent true biology in that the site is
+occupied \textit{in vivo} by multiple factors.
+
+The sensitivity and specificity of ChIP-seq approaches to identify \cis-regulatory elements in a tissue are still
+unknown.  For p300, current estimates suggest that around 80\% of the highlighted elements are active \cis-regulatory elements
+and that perhaps 20\% of all active \cis-regulatory elements are marked~\citep{Visel2009a}.  It is also unknown how the marks change
+over development, specifically how long the marks persist after being applied.
+Combining multiple assays for separate enhancer marks at separate timepoints will help provide an answer by
+examining the overlap of different marks across timepoints.  A high throughput, inexpensive enhancer assay
+will also be important to examine sensitivity and specificity.  Ideally, hundreds of putative enhancers would be
+examined to determine how activity correlates with epigenetic modifications.
+
+The study of neocortex development, while inherently interesting, is in many ways a case study for combining
+functional and computational genomics to study gene regulation.  Once techniques have been refined, similar
+approaches could be applied to study other developing tissues.  This dissertation demonstrates how combining
+experimental data with novel computational methods empowers high throughput approaches that extend beyond
+what can be achieved with experiment of computation alone.

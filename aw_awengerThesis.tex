@@ -1,0 +1,95 @@
+% note that the document can be single or double sided.  
+%\documentclass[12pt,twoside]{report}
+\documentclass[12pt]{report}
+
+\def \citep{\cite}
+
+%\usepackage{suthesis-2e}
+% The online version requires the \onlinesignature command (last command before the final \end{document}) for a signature page to be printed
+\usepackage[online]{suthesis-2e}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{epsfig}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage[section]{placeins}
+\usepackage{url}
+\usepackage[footnotesize]{caption}
+
+% Directory in which the figures are located
+\graphicspath{{Figures/}}
+
+% Can change the default bibliography name from "Bibliography"
+%\renewcommand{\bibname}{References}
+
+% Citation and referencing commands
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\tables}[1]{Tables~\ref{#1}}
+\newcommand{\chapref}[1]{Chapter~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+\newcommand{\appref}[1]{Appendix Section~\ref{#1}}
+\newcommand{\eqref}[1]{Equation~(\ref{#1})}
+\newcommand{\supfig}[1]{Supplementary Figure~\ref{#1}}
+\newcommand{\suptab}[1]{Supplementary Table~\ref{#1}}
+\newcommand{\suptabs}[1]{Supplementary Tables~\ref{#1}}
+\newcommand{\supnote}[1]{Supplementary Notes}
+
+% Commands to create formatted notes for myself 
+\newcommand{\ignore}[1]{}
+\newcommand{\minisec}[1]{\noindent {\small \bfseries \underline{#1}}}
+\newcommand{\mnote}[1]
+{$\triangleright$ {\mbox{}\marginpar{\scriptsize \raggedright $\bullet$
+                   \sf #1}}}
+
+
+% Commonly-used abbreviations in my thesis
+\newcommand{\cis}{\emph{cis}}
+
+% Equations
+\newcommand{\beq}[1]{\begin{equation}\label{#1}}
+\newcommand{\eeq}{\end{equation}}
+
+\begin{document}
+    \title{Computational Approaches to Understanding the Language of Vertebrate \emph{cis}-regulation}
+    \author{Aaron Michael Wenger}
+    \dept{Computer Science}
+    \principaladviser{Gill Bejerano}
+    \firstreader{David Kingsley}
+    \secondreader{Christopher Manning}
+    %\thirdreader{if I have another one too}
+%    \submitdate{May 2011} % If omitted, generates the month in which the file is compiled
+
+    % Preface sections
+    \beforepreface
+    \prefacesection{Abstract}
+    \input{abstract}
+
+    \prefacesection{Acknowledgments}
+    \input{acks}
+    \afterpreface
+
+    % Thesis chapters
+    \include{intro}
+    \include{cisreg}
+    \include{prism}
+    \include{neocortex}
+    \include{conclusion}
+ 
+     % Appendix/supplementary information
+    \appendix
+    \include{prismSuppl}
+    \include{neocortexSuppl}
+
+    % Bibliography
+    \bibliographystyle{modPlain}
+    \bibliography{awengerThesis}
+
+% Only include this if using the [online] specification with the suthesis-2e package
+% If so, include this to be able to print out a copy of the signature page (on acid-free paper!)
+% Still, comment it out in the copy of the dissertation you submit, since the signed copy will be
+% digitally appended to your document.
+%
+%\onlinesignature
+
+\end{document}

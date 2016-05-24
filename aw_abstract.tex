@@ -1,0 +1,51 @@
+Much of the functional sequence in the human genome is devoted to
+regulatory elements, which control when during development and where in
+the body genes are active.  \textit{Cis}-regulatory elements have been shown to
+contribute to human evolution and disease, but the function of most regulatory elements in
+the human genome is unannotated, and the grammatical rules for how regulatory
+function is encoded in DNA sequence are unknown.  This dissertation
+describes the application of a suite of novel computational genomics tools
+in 1) a genome-wide screen to broadly annotate the
+binding site composition and biological function of regulatory elements in the human and
+mouse genomes, and 2) a study of development of the mouse
+neocortex, a mammalian-specific brain region that underlies higher cognitive functions.
+%
+
+The genome-wide screen, termed PRISM for ``Predicting Regulatory Information
+from Single Motifs'', combines accurate transcription factor
+binding site prediction using a novel ``excess conservation score'' with
+GREAT, a tool for functional enrichment analysis of regulatory regions.  The
+excess conservation score identifies binding sites that are conserved more
+strongly than surrounding nucleotides, a signature which suggests specific
+evolutionary constraint on the binding site.  Binding site prediction with
+the excess conservation score outperforms the previous state-of-the-art for
+44 of 47 examined transcription factors.  The genome-wide PRISM screen identifies a biological function
+for 109,748 mostly distal binding sites in regulatory elements associated with 7,692
+different target genes at an overall false discovery rate of 15\%.  Many of
+the predictions are supported by prior literature, but the majority of predictions
+are novel and thus provide hypotheses for further experimental study.  A web
+portal -- http://PRISM.stanford.edu -- presents the data to biomedical researchers.
+%
+
+The case study of neocortex development combines computational analysis of
+regulatory elements with high-throughput sequencing techniques to uncover
+gene interaction networks in a rapid, non-targeted manner that is not
+possible with classical genetics methods.  ChIP-seq for the enhancer-associated
+co-activator protein p300 in dissected neocortex from E14.5 mouse embryos
+identifies 6,629 candidate enhancer regions.  The candidate enhancers are
+enriched near genes expressed in E14.5 neocortex and important to neocortex development.
+Eight of ten candidates tested in a mouse transgenic enhancer assay drive activity in
+specific patterns within the neocortex.  Surprisingly, 23\% of the 6,629 candidates
+are evolutionarily conserved beyond mammals and thus pre-date the mammalian innovation of
+the neocortex.  Motif analysis identifies \textit{Neurod}, \textit{Lhx/Lmx}, \textit{Nfi},
+\textit{Rfx}, and \textit{Ctcf}
+motifs enriched within the candidate enhancers, and the motifs are connected to specific
+functions and diseases.  I propose an approach to utilize such a combination of
+computational binding site analysis and functional genomics enhancer assays
+to identify tissue-specific gene regulatory networks.  I demonstrate the approach by
+predicting targets of \textit{Rbpj}.
+%
+
+These studies extend our knowledge of regulatory elements in the human genome, provide a suite
+of novel methods and tools, and illustrate how
+characterization of regulatory elements offers a novel perspective to genetic and genomic studies.
