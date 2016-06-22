@@ -1,32 +1,18 @@
-The advent of high throughput DNA sequencing has enabled the unprecedented 
-ability to read the 3 billion As, Cs, Gs, and Ts that make up our genome. 
-This has led to the discovery of thousands of mutations that are 
-associated with different human diseases. The vast majority of these 
-associations, however, remain exactly that - a single change in our DNA 
-that is statistically associated with a disease. This dissertation 
-describes three studies that aim to understand transcriptional 
-regulation and place mutations in the specific  biological pathways and 
-developmental contexts that give rise to different  diseases. In the first 
-study, I developed a high-specificity method to map non-protein-coding disease mutations from humans to homologous regions in the DNA of other species, where we re-created the human disease using CRISPR/Cas9 genome editing and studied the effects of the mutation. Finally, I examined genes that were mutated in autism spectrum disorders, identified a single protein that regulates the majority of them during a specific period of brain developmental, and exploited this property to confirm known autism genes and prioritize others for further study. These studies demonstrate how genomics can extend our understanding of different diseases by offering strategies for revealing their precise mechanism of action.
-
-
-Much of the functional sequence in the human genome is devoted to
-regulatory elements, which control when during development and where in
-the body genes are active.  \textit{Cis}-regulatory elements have been shown to
-contribute to human evolution and disease, but the function of most regulatory elements in
-the human genome is unannotated, and the grammatical rules for how regulatory
-function is encoded in DNA sequence are unknown.  This dissertation
-describes the application of a suite of novel computational genomics tools
-in 1) a genome-wide screen to broadly annotate the
-binding site composition and biological function of regulatory elements in the human and
-mouse genomes, and 2) a study of development of the mouse
-neocortex, a mammalian-specific brain region that underlies higher cognitive functions.
+The advent of high throughput DNA sequencing has enabled the unprecedented  ability to read the 3 billion As, Cs, Gs, and Ts that make up our genome. This has led to the discovery of thousands of mutations that are  associated with different human diseases. The vast majority of these associations, however, remain exactly that - a single change in our DNA that is statistically associated with a disease. 
 %
 
-The genome-wide screen, termed PRISM for ``Predicting Regulatory Information
-from Single Motifs'', combines accurate transcription factor
-binding site prediction using a novel ``excess conservation score'' with
-GREAT, a tool for functional enrichment analysis of regulatory regions.  The
+This dissertation describes three studies that aim to understand transcriptional regulatory logic and leverage this understanding to place human mutations in the specific  biological pathways and developmental contexts that give rise to different diseases. In the first study, I investigated the evolution of gene regulation in the developing neocortex driven by transposable elements being co-opted into developmental enhancers. In the second study, I examined genes that were mutated in autism spectrum disorders, identified a single protein that regulates the majority of them during a specific period of brain developmental, and exploited this property to confirm known autism genes and prioritize others for further study. Finally, I developed a high-specificity method to map non-protein-coding disease mutations from humans to homologous regions in the DNA of other species, where we re-created the human disease using CRISPR/Cas9 genome editing and studied the effects of the mutation. These studies demonstrate how genomics can extend our understanding of different diseases by offering strategies for revealing their precise mechanism of action.
+%
+
+The neocortex is a mammalian-specific structure that is responsible for higher functions such as cognition, emotion, and perception. To gain insight into its evolution and the gene regulatory codes that pattern it, we studied the overlap of its active developmental enhancers with transposable element families and compared this overlap to uniformly shuffled enhancers. Here we show a striking enrichment of the MER130 repeat family among active enhancers in the mouse dorsal cerebral wall, which gives rise to the neocortex, at embryonic day 14.5 (E14.5). We show that MER130 instances preserve a common code of transcriptional regulatory logic, function as enhancers, and are adjacent to critical neocortical genes. MER130, a nonautonomous interspersed transposable element, originates in the tetrapod or possibly Sarcopterygii ancestor, which far predates the appearance of the neocortex. Our results show that MER130 elements were recruited, likely through their common regulatory logic, as neocortical enhancers.
+%
+
+These studies demonstrate how genomics can extend our understanding of different diseases by offering strategies for combining human genetics and developmental biology to reveal their precise mechanism of action.
+
+Much of the functional sequence in the human genome is devoted to regulatory elements, which control when during development and where in the body genes are active.  \textit{Cis}-regulatory elements have been shown to contribute to human evolution and disease, but the function of most regulatory elements in the human genome is unannotated, and the grammatical rules for how regulatory function is encoded in DNA sequence are unknown.  This dissertation describes the application of a suite of novel computational genomics tools in 1) a genome-wide screen to broadly annotate the binding site composition and biological function of regulatory elements in the human and mouse genomes, and 2) a study of development of the mouse neocortex, a mammalian-specific brain region that underlies higher cognitive functions.
+%
+
+The genome-wide screen, termed PRISM for ``Predicting Regulatory Information from Single Motifs'', combines accurate transcription factor binding site prediction using a novel ``excess conservation score'' with GREAT, a tool for functional enrichment analysis of regulatory regions.  The
 excess conservation score identifies binding sites that are conserved more
 strongly than surrounding nucleotides, a signature which suggests specific
 evolutionary constraint on the binding site.  Binding site prediction with
@@ -56,6 +42,4 @@ functions and diseases.  I propose an approach to utilize such a combination of
 computational binding site analysis and functional genomics enhancer assays
 to identify tissue-specific gene regulatory networks.  I demonstrate the approach by
 predicting targets of \textit{Rbpj}.
-%
 
-These studies demonstrate how genomics can extend our understanding of different diseases by offering strategies for combining human genetics and developmental biology to reveal their precise mechanism of action.
