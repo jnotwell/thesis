@@ -1,0 +1,995 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\date{}
+
+\begin{document}
+
+\textbf{Genome-wide screen for deeply conserved GWAS-SNPs reveals
+regulatory mutations~underlying human phenotypes}
+
+\textbf{AUTHORS}
+
+Romain Madelaine\textsuperscript{1}, James H.
+Notwell\textsuperscript{2}, Gemini Skariah\textsuperscript{1}, Caroline
+Halluin\textsuperscript{1}, Charles C. Chen\textsuperscript{2}, Mark A.
+Krasnow\textsuperscript{3}, Gill Bejerano\textsuperscript{2,4,5},
+Philippe Mourrain\textsuperscript{1,6}
+
+\textbf{AFFILIATIONS}
+
+\textsuperscript{1} Stanford Center for Sleep Sciences and Medicine,
+Department of Psychiatry and Behavioral Sciences, Stanford, CA 94305,
+USA
+
+\textsuperscript{2} Department of Computer Science, Stanford, CA 94305,
+USA
+
+\textsuperscript{3} Howard Hughes Medical Institute and Department of
+Biochemistry, Stanford, CA 94305, USA
+
+\textsuperscript{4} Department of Developmental Biology, Stanford, CA
+94305, USA
+
+\textsuperscript{5} Division of Medical Genetics, Department of
+Pediatrics, Stanford, CA 94305, USA
+
+\textsuperscript{6} INSERM 1024, Ecole Normale Supérieure Paris, 75005,
+France
+
+* Correspondence:
+\href{mailto:mourrain@stanford.edu}{\nolinkurl{mourrain@stanford.edu}}
+and bejerano@stanford.edu
+
+\textbf{KEYWORDS}
+
+GWAS, SNPs, conserved non-coding elements, human diseases, zebrafish
+model system, \emph{miR-9,} retinal vascular caliber, blood vessels
+development, \emph{MEIS2, SOX6, SPRY2}\textbf{\\
+}
+
+\textbf{ABSTRACT }
+
+More than 90\% of human disease-associated mutations lie in non-genic
+regions of the genome, presenting a challenge for interpretation. We
+report a screen to identify GWAS SNPs embedded in deeply conserved
+non-coding DNA elements (CNE) preserved syntenically across vertebrates.
+We found 22 CNE/SNP pairs covering a wide range of human diseases and
+validated a subset for enhancer activity and SNP regulatory function,
+including CNE1/SNP rs17421627 associated with retinal vasculature
+defects. Zebrafish CNE1:EGFP transgenics revealed human CNE1 enhancer
+activity in the retina. CRISPR/Cas-9 deletion of CNE1 in the zebrafish
+genome led to defects in blood vessel development in the retina,
+suggesting that CNE1 enhancer is functionally associated with retinal
+vascular caliber in humans. Introducing the risk mutation in CNE1
+abolished EGFP expression, indicating that SNP rs17421627 is likely the
+causal mutation responsible for the human phenotype. Validating our
+prediction, we identified the target gene \emph{cis}-regulated by
+CNE1/rs17421627: the neurogenesis modulator, microRNA-9. Consistent with
+the GWAS studies, miR-9 depletion also led to retinal vasculature
+defects, demonstrating that \emph{miR-9} is the conserved gene
+functionally associated with retinal blood vessel development. This
+study validates our \emph{in silico} approach to identify conserved
+enhancers regulated by GWAS SNPs and demonstrates how the combination of
+human and zebrafish genetics reveals enhancer function, the regulatory
+activity of the SNP, the \emph{cis}-regulated gene, and the biological
+processes disrupted in the associated disorders.
+
+\textbf{\\
+}
+
+\textbf{INTRODUCTION}
+
+The NHGRI GWAS catalog (http://www.genome.gov/gwastudies/) contains
+thousands of tag single nucleotide polymorphisms (SNPs) significantly
+associated with human diseases and phenotypes collected from hundreds of
+independent studies. More than 90\% of SNPs in this repository lie in
+non-genic regions of the genome, and most are thought to highlight
+disease-associated modifications to gene regulatory elements
+(\protect\hyperlink{_ENREF_8}{Hindorff et al. 2009}). In addition to
+being mostly non-genic, reported SNPs may either be the causal mutation
+or may gain their association from linkage with the causal SNP
+(\protect\hyperlink{_ENREF_32}{Tuupanen et al. 2009};
+\protect\hyperlink{_ENREF_22}{Nicolae et al. 2010}). Selecting SNPs
+under strong sequence conservation across many species has provided a
+useful strategy for identifying the causal mutation from multiple
+associated loci (\protect\hyperlink{_ENREF_31}{Spieler et al. 2014}).
+Here we report an original screen to identify human GWAS SNPs embedded
+in non-coding DNA regions conserved to zebrafish, a vertebrate model
+where the role of these conserved SNPs can be studied \emph{in vivo}. In
+this screen, we require the non-coding sequences to be conserved
+syntenically adjacent to the same target genes. Because sequence
+conservation is a hallmark of functional \emph{cis}-regulatory elements
+(\protect\hyperlink{_ENREF_7}{Hiller et al. 2013}), and because these
+sequences are conserved syntenically, we hypothesized that our screen
+would identify causal regulatory mutations that could be tested in
+zebrafish.
+
+Our genome-wide screen identified 22 such SNPs covering a wide range of
+human traits and diseases. We validated the \emph{cis}-regulatory
+function of 5 CNEs and successfully demonstrated that the risk allele
+for 2 of the SNPs abolished enhancer activity and likely contributes to
+the associated disease. The CNE1/SNP rs17421627 pair has been associated
+with retinal vascular caliber defects in two related GWAS studies
+searching for novel loci involved in human vascular diseases
+(\protect\hyperlink{_ENREF_9}{Ikram et al. 2010};
+\protect\hyperlink{_ENREF_29}{Sim et al. 2013}). Changes in retinal
+vascular caliber have been linked with increased cardiovascular risk and
+are predictive of global vascular pathology. For example, wider venular
+and narrower arteriolar calibers were associated with an increased risk
+of coronary heart disease and cardiovascular mortality
+(\protect\hyperlink{_ENREF_34}{Wang et al. 2007};
+\protect\hyperlink{_ENREF_20}{McGeechan et al. 2009b}), while wider
+retinal venular caliber also predicted stroke
+(\protect\hyperlink{_ENREF_19}{McGeechan et al. 2009a}).
+
+We found that human CNE1 acts as an enhancer and drives expression in
+the central nervous system including the retina. We showed that SNP
+rs17421627 is a regulatory mutation and that CNE1/rs17421627 regulates
+\emph{microRNA-9} expression. miR-9 is a well-known regulator of
+neurogenesis (\protect\hyperlink{_ENREF_4}{Coolen et al. 2013}).
+\emph{In vivo}, miR-9 has been shown to control the proliferation and
+differentiation of neural stem cells (NSCs) and its inhibition
+transiently increases their proliferation, ultimately resulting in an
+increased number of differentiating neurons
+(\protect\hyperlink{_ENREF_1}{Bonev et al. 2011};
+\protect\hyperlink{_ENREF_28}{Shibata et al. 2011};
+\protect\hyperlink{_ENREF_5}{Coolen et al. 2012}). The physiological
+role of miR-9 during angiogenesis \emph{in} \emph{vivo} is unknown, but
+miR-9 has been associated with cancer cell vascularization \emph{in
+vitro} (\protect\hyperlink{_ENREF_36}{Zhang et al. 2012};
+\protect\hyperlink{_ENREF_38}{Zhuang et al. 2012}). Here, we show that
+the deletion of CNE1 (∆CNE1) in the zebrafish genome leads to retinal
+vasculature defects. Furthermore, \emph{miR-9} knock-out embryos display
+a retinal vascular phenotype reminiscent of the risk allele carrier of
+rs17421627 in human. Together, our results validate our \emph{in silico}
+approach and uncover an unexpected function for miR-9 in the control of
+retinal vasculature development. We also demonstrated that SNP
+rs17421627 is the causal mutation affecting the function of CNE1 and
+responsible for the retinal vascular caliber phenotype. This illustrates
+the effectiveness of studying non-coding GWAS SNPs \emph{in vivo} in
+zebrafish to reveal their biological contributions to the associated
+human disease and phenotypes.
+
+\textbf{\\
+}
+
+\textbf{RESULTS}
+
+\textbf{Computational identification of non-coding GWAS SNPs conserved
+to zebrafish}
+
+We began by extracting 14,068 references SNP cluster ID (rsID) entries
+from the NHGRI GWAS catalog. We padded each SNP with 100bp on either
+side, creating a local sequence context to be used when querying the
+zebrafish genome. We then removed all regions overlapping any exon to
+avoid coding and splicing related mutations, leaving 11,822 GWAS
+SNP-embedding non-coding elements. For each human element, we
+constructed a profile Hidden Markov Model (HMM) based on multi-species
+sequence conservation and used nhmmer
+(\protect\hyperlink{_ENREF_35}{Wheeler and Eddy 2013}) to sensitively
+query the zebrafish genome. To specifically identify gene regulatory
+homologies we then applied a gene synteny filter, requiring that the
+human GWAS SNP-embedding region and its top zebrafish alignment are
+found near orthologous genes in human and zebrafish (Fig. 1A and
+Methods). This resulted in a final list of 22 human GWAS SNPs embedded
+in non-coding elements conserved in zebrafish next to orthologous genes
+(Fig. 1A; Table S1). The list includes SNPs associated with traits and
+diseases ranging from drug responses to metabolic disorders. To estimate
+the false discovery rate (FDR), we used the same set of models to query
+the reversed but not complemented zebrafish genome, and this resulted in
+zero false positive matches. For 8 of the 22 CNE/SNP pairs, we
+identified a single syntenic gene, suggesting the identity of the gene
+regulated by the CNE containing the GWAS SNP. Finally, all the CNE/SNPs
+pairs identified in this screen are strongly conserved during 400
+million years of evolution suggesting that they are functional
+\emph{cis}-regulators (Fig. S1B and Fig. S2 for an example).
+
+\textbf{Functional \emph{in vivo} validation of CNE enhancer activity
+and the regulatory function of associated SNPs}
+
+To determine whether the conserved CNE/SNP pairs discovered by our
+screen act as \emph{cis}-regulatory elements \emph{in vivo}, we tested
+the transcriptional activity of 8 of 22 human CNEs during early
+zebrafish development. We fused the human CNE regions to a basal
+promoter driving EGFP expression to establish stable zebrafish
+transgenic lines (at least 3 independent integrations for each CNE/SNP).
+We validated enhancer function for 5 of these conserved non-coding
+elements (CNE1/rs17421627; CNE8/rs1568679; CNE10/rs12431307;
+CNE15/rs11190870; CNE18/rs16932455). The lack of activity observed for
+the three CNEs (CNE9, CNE16 and CNE17) could be attributed to the
+developmental stage we assayed or their identity as repressor or
+insulator elements. The CNEs with validated enhancer function drove
+restricted EGFP expression in a large variety a cell types (neurons,
+glial cells, muscles and notochord), demonstrating their specific
+activity (Fig. 1B, C, Fig. 3B, C and Fig. S1A). Based on predicted
+target genes and EGFP expression, we likely identified the
+\emph{cis}-regulated gene for CNE1/\emph{miR-9-2}, CNE8/\emph{meis2},
+CNE10/\emph{spry2,} and CNE18/\emph{sox6}. Finally, we tested the
+causality of the SNP mutation for CNE1/rs17421627 and CNE8/rs1568679,
+and validated their regulatory function by demonstrating that the risk
+allele abolished enhancer activity Fig. 1B and Fig. 3B, C). Together,
+these results validated our \emph{in silico} predictions and
+demonstrated the approach efficiently identifies causal CNE/SNP pairs
+associated with human disease, as well as the genes they
+\emph{cis}-regulate.
+
+\textbf{CNE1 enhancer deletion leads to retinal vasculature defects
+\emph{in vivo}}
+
+To investigate the function of the conserved CNE1 enhancer in retinal
+vasculature formation, we deleted CNE1 in the zebrafish genome taking
+advantage of the CRISPR/Cas-9 system
+(\protect\hyperlink{_ENREF_33}{Varshney et al. 2015}). We deleted 770bp
+of CNE1 (Fig. 2A), including the deeply-conserved region of 473bp
+containing the SNP (Fig. S1B and Fig. S2). We used the CNE1 deletion
+mutant as a model to study the human CNE1 risk allele phenotype. CNE1
+mutants display normal eye~morphology (Fig. 2B), but micro-angiography
+of ∆CNE1 larvae revealed a disrupted blood vessel network and vascular
+defects in the retina (Fig. 2C), similar to the human phenotype
+associated with the risk allele. We characterized this phenotype using
+the \emph{kdrl} (\emph{vegfr2}) reporter line labelling the vasculature
+(\protect\hyperlink{_ENREF_2}{Chi et al. 2008}) and observed a reduction
+of \textasciitilde{}40\% in the number of vessels and branching points
+in the ∆CNE1 mutant (Fig. 2D, E). These results indicate that CNE1 is
+functionally associated with blood vessel development in the retina.
+These data also suggest that SNP rs17421627 may be a causal mutation
+affecting CNE1 activity and responsible of the retinal vascular caliber
+defects in human.
+
+\textbf{CNE1 enhancer regulates \emph{miR-9-2} expression}
+
+CNE1/SNP rs17421627 occupies open chromatin in human fetal brain cells
+suggesting that it is active and regulates the syntenically-conserved
+neighboring genes in the central nervous system (CNS) (Fig. S1C).
+Indeed, the human CNE1 (948bp) used to establish \emph{CNE1:egfp}
+transgenic zebrafish drove EGFP expression in the brain and retina (Fig.
+3B, C and Fig. S3C, D). The SNP is located \textasciitilde{}200kb away
+of the closest neighboring coding genes, \emph{TMEM161B} and
+\emph{MEF2C} in the human genome (Fig. 3A). In both GWAS studies
+(\protect\hyperlink{_ENREF_9}{Ikram et al. 2010};
+\protect\hyperlink{_ENREF_29}{Sim et al. 2013}), the authors
+hypothesized that \emph{MEF2C} was the target because of its role in
+cardiovascular development (\protect\hyperlink{_ENREF_17}{Lin et al.
+1997}) but the \emph{CNE1:egfp} expression profile did not match
+\emph{tmem161b} and \emph{mef2cb} expression (Fig. 3A). \emph{In
+silico}, we also predicted \emph{microRNA-9-2} as a putative target gene
+of CNE1 (Fig. 1A). \emph{miR-9-2} is located \textasciitilde{}100kb away
+and is the closest gene adjacent to CNE1 (Fig. 3A and Fig. S1C). In
+addition, \emph{miR-9-2} is conserved in the CNE1 synteny block
+(\protect\hyperlink{_ENREF_13}{Kikuta et al. 2007}) and is embedded in
+its precursor, LINC00461 in human
+(\protect\hyperlink{_ENREF_25}{Rodriguez et al. 2004}). In zebrafish,
+\emph{miR-9} is expressed in the brain and retina in a pattern
+reminiscent of the \emph{CNE1:egfp} line (Fig. 3A, B and Fig. S3) and
+its expression is conserved in the inner nuclear layer of both the
+zebrafish and mouse retina (Fig. 3A, D). \emph{miR-9-5}, the zebrafish
+ortholog of the human \emph{miR-9-2}, is also the closest conserved
+adjacent gene to CNE1 in the zebrafish genome and is expressed in the
+retina (Fig. 3D). Consistent with the GWAS studies, \emph{miR-9}
+expression is also reported in human retina
+(\protect\hyperlink{_ENREF_11}{Karali et al. 2016}).
+
+We next tested how CNE1 can act a \emph{cis}-regulator of
+\emph{miR-9-5}. In zebrafish, the \emph{miR-9-5} gene is transcribed in
+two precursors expressed similarly to the mature miR-9
+(\protect\hyperlink{_ENREF_21}{Nepal et al. 2015}), and the deletion of
+CNE1 leads to a reduction in the expression of \emph{miR-9-5} precursors
+(Fig. 4A, B). This result indicates that both \emph{pri-} and
+\emph{pre-miR-9-5} are co-regulated by CNE1. Consistent with the
+\emph{egfp} expression pattern driven by CNE1, we did not observe any
+evidence of \emph{tmem161b} and \emph{mef2cb} being \emph{cis}-regulated
+by CNE1 (Fig. 4C, D). Although we observed a reduction of
+\emph{CNE1:egfp} expression at 3 dpf, we did not notice any obvious
+reduction in \emph{miR-9-5} precursor expression earlier during
+development, suggesting that either CNE1 is not active, or that other
+\emph{miR-9-5} enhancers act redundantly at these stages. We also showed
+that the downregulation in \emph{miR-9-5} precursors is correlated to a
+reduction of the mature miR-9-5 expression in 31\% of the ∆CNE1 mutant
+larvae (Fig. 4E). Contrary to the~\emph{miR-9-2}~knock-out
+(\protect\hyperlink{_ENREF_28}{Shibata et al. 2011}), targeted deletion
+of \emph{LINC00461} does not affect brain development in mouse
+(\protect\hyperlink{_ENREF_23}{Oliver et al. 2015}), suggesting that the
+functional sequence of this locus is the microRNA. Together, these data
+suggest that the functional conserved sequence \emph{cis}-regulated by
+CNE1 in human is \emph{miR-9-2}.
+
+\textbf{SNP rs17421627 disrupts \emph{miR-9} expression }
+
+These results indicate that CNE1 is a \emph{cis}-regulatory element
+regulating \emph{miR-9,} and we confirmed cellular co-expression of
+\emph{miR-9} in CNE1:EGFP+ cells in the retina (Fig. 5A) and brain (Fig.
+S3C, D). We then examined whether the human SNP rs17421627 had an effect
+on the regulatory ability of CNE1 by replacing the protective T allele
+with the risk G allele in the original \emph{CNE1:egfp} transgene. While
+only one base pair was changed, EGFP expression was completely abolished
+(Fig. 3B, C), demonstrating the regulatory activity of the SNP.
+Together, these results strongly suggest that SNP rs17421627 is a causal
+mutation affecting \emph{miR-9-2} expression and responsible for the
+human vessel caliber defects.
+
+\textbf{miR-9 depletion leads to retinal vasculature formation defects}
+
+Because miR-9 is a well-known regulator of neurogenesis
+(\protect\hyperlink{_ENREF_4}{Coolen et al. 2013}), the putative
+involvement in vasculature formation came as a surprise, as we did not
+detect any expression in endothelial cells (ECs) or blood vessels (Fig.
+S4A, B and Laure Bally-Cuif, personal communication). Consistent with
+these observations, \emph{LINC00461}, the \emph{miR-9-2} precursor
+(\protect\hyperlink{_ENREF_25}{Rodriguez et al. 2004}), is not expressed
+in ECs in the human brain
+(\href{http://www.brainrnaseq.org}{www.brainrnaseq.org};
+(\protect\hyperlink{_ENREF_37}{Zhang et al. 2016})). Interestingly,
+previous \emph{in vitro} studies associated \emph{miR-9} expression with
+tumor angiogenesis (\protect\hyperlink{_ENREF_36}{Zhang et al. 2012};
+\protect\hyperlink{_ENREF_38}{Zhuang et al. 2012}), suggesting that
+miR-9 activity could have a role during physiological retinal
+angiogenesis.
+
+To investigate how a downregulation of \emph{miR-9} expression is
+correlated to a retinal vascular phenotype,~we analyzed the expression
+of the mature miR-9-5 in the retina of CNE1 mutant larvae. miR-9-5
+expression is not detected in 88\% of the mutant retinas (Fig. 5B),
+indicating that a downregulation of \emph{miR-9} expression may be
+responsible the retinal blood vessel defects observed in ∆CNE1 mutants.
+This result also suggests that there is less redundancy between
+\emph{miR-9-5} enhancers for driving expression in the retina compared
+to the brain, and that CNE1 is major transcriptional regulator of
+\emph{miR-9-5} expression in the retina. To further support the function
+of~miR-9 in retinal angiogenesis \emph{in vivo}, we used the previously
+described miR-9 morpholino (\protect\hyperlink{_ENREF_16}{Leucht et al.
+2008}; \protect\hyperlink{_ENREF_4}{Coolen et al. 2013}). In zebrafish,
+miR-9~morphants display normal eye~morphology (Fig. S4C),~but the
+hyaloid vasculature in the retina was strongly reduced and the remaining
+vessels were thicker (Fig. 5C). We characterized this reduction in blood
+vessel branching complexity and observed a decrease of
+\textasciitilde{}50\% in the number of retinal vessels and branching
+points (Fig. 5D), indicating that the vascular network organization is
+affected in the retina. Together these results show that miR-9 activity
+is required for the normal development of the retinal vasculature in
+vertebrates, and that \emph{miR-9} downregulation is, at least
+partially, responsible for the retinal vasculature phenotype caused by
+rs17421627 risk allele in human.
+
+\textbf{\\
+}
+
+\textbf{DISCUSSION}
+
+This work discovered 22 human phenotype-associated regulatory SNPs that
+are embedded within sequences conserved to zebrafish, a vertebrate
+system where we model one such SNP's functional impact and the biology
+of the associated human phenotype \emph{in vivo}. With the growth of the
+NHGRI GWAS Catalog driven by larger cohort studies implicating more SNPs
+that reach genome-wide significance
+(\protect\hyperlink{_ENREF_26}{Schizophrenia Working Group of the
+Psychiatric Genomics 2014}), we expect the number of GWAS SNPs conserved
+to zebrafish and the utility of our approach to grow (Fig. S5).
+Determining the biological implications of these mutations, however,
+remains a challenge. The overwhelming majority of the GWAS SNPs
+identified (90\% of \textasciitilde{}14k SNPs) occupy non-genic portions
+of the genome that do not result in an obvious disruption, such as
+causing a non-synonymous amino acid change within a protein coding gene,
+making them challenging to interpret. Furthermore, GWAS studies report
+tag SNPs that may be merely co-segregating markers with the casual
+mutation (\protect\hyperlink{_ENREF_32}{Tuupanen et al. 2009};
+\protect\hyperlink{_ENREF_22}{Nicolae et al. 2010}).
+
+Our screen takes on these challenges. The evolutionary distance between
+human and zebrafish can reveal non-coding SNPs of likely importance for
+gene \emph{cis}-regulation (\protect\hyperlink{_ENREF_7}{Hiller et al.
+2013}). A hallmark of \emph{cis}-regulatory sequence conservation is
+that it persists alongside the gene or genes it regulates, even in
+species as diverged as human and zebrafish, a property which we
+exploited in our computational screen. This allowed us to include very
+sensitive alignments with an estimated zero false-positives. By
+identifying aligning non-coding regions adjacent to orthologous genes,
+we also predict the putative target genes whose expression may be
+modulated by the regulatory SNPs. For 8 of the 22 CNE/SNP pairs, we
+identified a single gene in conserved synteny, meaning that we have
+identified a strong candidate gene related to the GWAS SNP.
+
+While our approach cannot comprehensively address the problem of
+interpreting all non-genic GWAS SNPs, it provides a tractable approach
+for functionally studying a subset of them in zebrafish. The first 22
+GWAS SNPs revealed by our genomic screen are associated with a wide
+variety of human phenotypes and diseases, which range from drug
+responses to cancer. Studying these polymorphic sites in zebrafish
+represents a first step in deciphering the biological mechanisms
+underpinning the human traits. In addition to CNE1/rs17421627, we
+validated the specific transcriptional activity of 4 other conserved
+CNEs and likely identify the \emph{cis}-regulated gene for 3 them. CNE18
+drives EGFP expression in retinal ganglion cells of the retina and in
+muscles of the trunk, where \emph{sox6} mRNA is also expressed and known
+to be important during development
+(\protect\hyperlink{_ENREF_10}{Jackson et al. 2015}). CNE10 activity is
+observed in the notochord, and \emph{spry2}, the predicted
+\emph{cis}-regulated gene, is known to be important for the formation of
+this structure (\protect\hyperlink{_ENREF_30}{Sivak et al. 2005}).
+Furthermore, \emph{meis2} mRNA co-localizes with EGFP driven by CNE8 in
+the zebrafish brain, and the introduction of the risk allele, associated
+to antipsychotic treatment response, abolishes its activity. Further
+investigations will be necessary to shed the light on the role of these
+CNE/SNP pairs in the associated human disorders. This study also
+demonstrated the efficiency of a targeted deletion of the conserved CNE1
+in the zebrafish genome using the CRISPR/Cas-9 system. This genome
+editing technique may also be promising for the CNEs without enhancer
+activity (CNE9, CNE16 and CNE17), as it may reveal endogenous repressor
+functions. Together, these data demonstrated the efficiency of the
+zebrafish as a model system to validate the activity of human CNEs and
+the regulatory role of SNPs, as well as study the biology of the
+associated human diseases. Our study of the \emph{miR-9} CNE/SNP pair in
+zebrafish illustrates the necessity of working with an animal model
+system, in addition to cell culture, to reveal the impact on gene
+regulation at the whole organism level.
+
+Our experiments revealed numerous insights on the functional impact and
+biology of the \emph{miR-9-}regulating CNE/SNP. First, a short human CNE
+can drive a specific expression pattern in space and time during
+zebrafish development, demonstrating the specificity of the enhancer.
+Second, the mutagenic potential of a risk allele can be directly tested
+in fish allowing us to discriminate between a co-segregating variant and
+the causal mutation. Third, by comparing the enhancer reporter
+expression with the mRNA distribution of the neighboring genes and by
+deleting the CNE enhancer in the zebrafish genome, we identified the
+\emph{cis}-regulated gene. Finally, our findings revealed that the
+microvasculature defect studied in the GWAS is the result of
+\emph{miR-9-2} expression downregulation in neural cells and uncover a
+function for miR-9 during angiogenesis \emph{in vivo}. This study
+illustrates how the combination of human and zebrafish genetics can
+reveal unexpected biological processes regulated by causal SNP
+mutations.
+
+\textbf{\\
+}
+
+\textbf{EXPERIMENTAL PROCEDURES}
+
+\textbf{Identification of zebrafish conserved non-coding GWAS SNPs}
+
+The NHGRI GWAS catalog (http://www.genome.gov/gwastudies/) was most
+recently downloaded on October 7, 2014. rsIDs were extracted from the
+catalog and mapped to genomic loci in the GRCh37 human reference (hg19)
+using the dbSNP 137 database (\protect\hyperlink{_ENREF_27}{Sherry et
+al. 2001}) table from the UCSC Genome Browser
+(\protect\hyperlink{_ENREF_12}{Karolchik et al. 2014}). Only uniquely
+mapping rsIDs were retained. Each SNP was padded with 100bp on each
+side, creating a local sequence context to be used when querying the
+zebrafish genome. Those elements overlapping any Ensembl gene annotation
+(Ensembl release 75; (\protect\hyperlink{_ENREF_6}{Flicek et al.
+2014})), padded by 50bp, were excluded to avoid all coding and splicing
+related events, but non-coding intronic sequences were not removed.
+
+For each element, the corresponding alignment blocks (from a varying
+number of species) were extracted from the UCSC 46-way multiple
+alignment (\protect\hyperlink{_ENREF_12}{Karolchik et al. 2014}).
+Sequences that had been soft-masked in the UCSC alignment were
+hard-masked to prevent alignments between repetitive sequences. A
+profile HMM was constructed from the alignment corresponding to each
+element using the hmmbuild utility from the HMMER package (version
+3.1b1; (\protect\hyperlink{_ENREF_35}{Wheeler and Eddy 2013})). This
+model was used to query the zebrafish Zv9 assembly (danRer7) using
+nhmmer (version 3.1b1) with default parameters. All alignments were
+retained. The human and zebrafish matches were then realigned using
+LASTZ (version 1.02.00; -\/-seed=match4 -\/-hspthresh=500
+-\/-gappedthresh=500; HoxD55 scoring matrix;
+\url{http://www.bx.psu.edu/~rsharris/lastz/}). Only pairs scoring above
+2000 were retained.
+
+GWAS SNPs embedded specifically in gene regulatory regions conserved to
+zebrafish are expected to lie next to the orthologous gene(s) in both
+human and zebrafish. This property is known as synteny. Ensembl gene
+transcripts and ortholog mappings (Ensembl release 75;
+(\protect\hyperlink{_ENREF_6}{Flicek et al. 2014})) were used to
+identify syntenic alignments. The top-scoring zebrafish alignment for
+each human query was labeled as syntenic if there exists an Ensembl gene
+transcript within 500kb of the hg19 SNP, as well as an Ensembl gene
+transcript corresponding to a human gene ortholog within 500kb of the
+zebrafish alignment.
+
+\textbf{CRISPR/Cas-9 deletion of CNE1 in the zebrafish genome}
+
+To delete CNE1, we took advantage of the previously described genome
+editing method (\protect\hyperlink{_ENREF_33}{Varshney et al. 2015}). We
+used two gRNA targeting the CNE1 locus (5'-CCCGGCGTCCCCCTTCCT-3' and
+5'-AGGAAGGGGGACGCCGGG-3'). Co-injection of these gRNA with the
+\emph{Cas9} mRNA resulted in a deletion of 770 bp. F0 carriers for the
+deletion in the germline were identified by PCR on the clutches and
+outcrossed to obtain F1 heterozygous mutants. F2 mutants homozygous for
+the deletion were also identified by PCR.
+
+\textbf{Fish lines and developmental conditions}
+
+Embryos were raised and staged according to standard protocols
+(\protect\hyperlink{_ENREF_14}{Kimmel et al. 1995}), in accordance with
+Stanford University animal care guidelines. The following transgenic
+lines were used to visualize endothelial cells:
+\emph{Tg(kdrl:ras-mCherry}) (\protect\hyperlink{_ENREF_2}{Chi et al.
+2008}) and \emph{Tg(kdrl:egfp}) (\protect\hyperlink{_ENREF_3}{Choi et
+al. 2007})\emph{.} Embryos were fixed overnight at 4°C in 4\%
+paraformaldehyde/1xPBS, after which they were dehydrated through an
+ethanol series and stored at −20°C until use.
+
+\textbf{Plasmid construction and transgenic line establishment}
+
+For the generation of \emph{Tg(CNEx:egfp)} and \emph{Tg(CNExSNP:egfp),}
+transgenic lines were made by PCR amplification of human genomic DNA.
+PCR products were directionally cloned into the XhoI and BglII sites of
+the pTol2-E1b:EGFP vector. Plasmids were injected into one-cell stage
+embryos with the Tol2 mRNA transposase
+(\protect\hyperlink{_ENREF_15}{Kwan et al. 2007}). For each stable line,
+at least 3 independent integrations were used to validate the specific
+transcriptional activity or the absence of expression with the risk
+allele. For example, for the \emph{Tg(CNE1:egfp),} 4 independent
+integrations with an identical expression pattern of the \emph{egfp}
+were identified and for the \emph{Tg(CNE1SNP:egfp)}, 9 independent
+integrations with no detectable \emph{egfp} expression were identified
+by genotyping.
+
+\textbf{\emph{In situ} hybridization and Immunostaining}
+
+\emph{In situ} hybridizations were performed as previously described
+(\protect\hyperlink{_ENREF_24}{Oxtoby and Jowett 1993}). \emph{meis2a}
+and \emph{sox6} ORF was cloned in a pCS2+ vector using zebrafish cDNA
+and antisense DIG labelled probes were transcribed using the linearized
+pCS2+ plasmid containing the ORF. For \emph{miR-9} ISH, the previously
+described miRCURY detection probe (LNA) hsa--miR-9 (Exiqon) was used
+(\protect\hyperlink{_ENREF_16}{Leucht et al. 2008}). For miR-9-5 ISH, a
+miRCURY LNA probe was specifically designed by Exiqon. Probes for
+\emph{pre-miR-9-5} and \emph{pri-miR-9-5} were amplified by PCR on
+genomic DNA to target the previously described regions in the
+\emph{miR-9-5} precursor (\protect\hyperlink{_ENREF_21}{Nepal et al.
+2015}). \emph{In situs} were revealed using either BCIP and NBT (Roche)
+or Fast Red (Roche) as substrates.
+
+Immunohistochemical stainings were performed as previously described
+(\protect\hyperlink{_ENREF_18}{Masai et al. 1997}), using either
+anti-GFP (1/1000, Torrey Pines Biolabs), anti-HuC/D (1/500, Molecular
+Probes), or anti-DsRed (1/500, Clontech) as primary antibodies and Alexa
+488 or Alexa 555-conjugated goat anti-rabbit IgG or goat anti-mouse IgG
+(1/1000) as secondary antibodies (Molecular Probes). FITC-dextran 2000
+kDa (Sigma) was used to visualize the vasculature after injection in the
+cardinal vein.
+
+\textbf{Antisense morpholino injection }
+
+For morpholino knockdowns, we used the previously described miR-9 MO
+(TCATACAGCTAGATAACCAAAGA) and the control MO (CACCAAACCATATAGAAGTGATA)
+(1mM; (\protect\hyperlink{_ENREF_16}{Leucht et al. 2008};
+\protect\hyperlink{_ENREF_5}{Coolen et al. 2012})). Embryos were
+injected at the one-cell stage with 1-2 nl of the MO.
+
+\textbf{Image acquisition}
+
+Confocal acquisitions were carried out using a Leica SP5 confocal
+microscope (Stanford cell science imaging facility). Images were
+manipulated using Photoshop (Adobe) software. For quantification,
+confocal stacks were analysed using ImageJ software.
+
+\textbf{FIGURE LEGENDS}
+
+\textbf{Figure 1: Identification of GWAS-SNPs embedded in
+deeply-conserved non-coding elements and their syntenic genes}
+
+(\textbf{A}) Methodology used to perform the screen and list of
+regulatory GWAS SNPs conserved between human and zebrafish. (\textbf{B})
+Confocal section of double \emph{in situ}/immunolabelling showing the
+overlap in expression of endogenous \emph{meis2a} and EGFP protein in
+the \emph{Tg(CNE8:egfp)} adult brain (arrowhead ,zoom in, left panel).
+Confocal projections of EGFP immunolabelling in \emph{Tg(CNE8:egfp)}
+containing the protective T allele or \emph{Tg(CNE8SNP:egfp)} containing
+the risk C allele in larvae at 72 hpf; EGFP expression in the brain is
+abolished in the presence of the SNP rs1568679 risk allele. (\textbf{C})
+Confocal section of immunolabelling showing EGFP protein expression and
+the similarity with \emph{sox6} mRNA expression in muscles of the trunk
+in \emph{Tg(CNE18:egfp)} at 24 hpf. Confocal section of double \emph{in
+situ}/immunolabelling showing extensive overlap in the expression of
+endogenous \emph{sox6} gene and EGFP in \emph{Tg(CNE18:egfp)} retina at
+48 hpf. Dorsal view of the brain with anterior up. Lateral view of the
+retina. Lateral view of the trunk. Scale bars: 100 µm.
+
+\textbf{Figure 2: CNE1 regulates retinal vasculature formation \emph{in
+vivo}}
+
+(\textbf{A}) Schematic of the zebrafish genomic DNA containing CNE1,
+which was deleted using the CRISPR/Cas-9 system with a pair of gRNA
+(∆CNE1). The deletion is 770 bp long, including the deeply-conserved
+region containing the SNP. (\textbf{B, C}) CNE1 homozygous mutants
+display normal brain and eye morphology \textbf{(B)}, but the formation
+of the hyaloid vasculature in the retina is affected, as revealed by
+microangiography using FITC-dextran injection \textbf{(C)}. The retinal
+vasculature shown in \textbf{(C)} are from larvae show in \textbf{(B)}.
+\textbf{(C)} Confocal projections of mCherry immunolabelling in
+\emph{Tg(kdrl:mCherry)} retina at 72 hpf showing hyaloid vasculature
+formation in control and ∆CNE1 mutant larvae. (\textbf{D})
+Quantification of the hyaloid vasculature network organization observed
+in control and ∆CNE1 mutant larvae at 72 hpf. A minimum of 28 retinas
+was analyzed for each context. Dorsal view of the brain with anterior
+up. Lateral view of the retina. Scale bars: 10 µm. Error bars represent
+s.d. *\emph{P}\textless{}0.05, **\emph{P}\textless{}0.001,
+***\emph{P}\textless{}0.0005, determined by \emph{t}-test.
+
+\textbf{Figure 3: SNP/rs17421627 is a regulatory mutation of CNE1
+enhancer activity }
+
+(\textbf{A}) Schematic of the human and zebrafish genomic DNA containing
+CNE1 where SNP rs17421627 is located. Whole-mount \emph{in situ}
+hybridization against \emph{tmem161b, mef2cb,} or \emph{miR-9} in larvae
+at 72 hpf. (\textbf{B-C}) Confocal projections of EGFP immunolabelling
+in \emph{Tg(CNE1:egfp)} containing the protective T allele or
+\emph{Tg(CNE1SNP:egfp)} containing the risk G allele (rs17421627) in
+larvae at 72 hpf (B) or adult retina immunolabelled with glutamine
+synthetase (GS) (C). In \emph{Tg(CNE1:egfp)}, EGFP expression is
+detected in cell bodies in the inner nuclear layer of the retina,
+telencephalon, optic tectum, and hindbrain. The \emph{Tg(CNE1:egfp)}
+expression pattern is reminiscent of \emph{miR-9} expression. EGFP
+expression in the CNS is abolished in the presence of the SNP rs17421627
+risk allele. (\textbf{D}) Whole-mount \emph{in situ} hybridization
+against miR-9 in zebrafish (2 months old) or mouse (P2 stage; upper
+panel) or miR-9-5 in zebrafish larvae (lower panel) showing similar
+expression in the inner nuclear layer of the retina. Retina (R),
+Ganglion cells layer (GCL), Inner nuclear layer (INL), Telencephalon
+(T), Optic Tectum (OT), Hindbrain (H). Dorsal view of the brain with
+anterior up. Lateral view of the retina. Scale bars: 100 µm.
+
+\textbf{Figure 4: CNE1 regulates \emph{miR-9-5} expression }
+
+Whole-mount \emph{in situ} hybridization against \emph{pri-miR-9-5}
+(\textbf{A})\emph{, pre-miR-9-5} (\textbf{B})\emph{, tmem161b}
+(\textbf{C})\emph{, mef2c} (\textbf{D}) or the mature miR-9-5
+(\textbf{E}) in control and ∆CNE1 larvae at 72 hpf. The expression of
+\emph{miR-9-5}, but not \emph{tmem161b} and \emph{mef2c}, is reduced in
+the brain of ∆CNE1 mutants. In 31\% of the mutant brains (n=36),
+\emph{miR-9-5} expression is reduced (compared to 0\% in the control
+larvae (n=33)). Dorsal view of the brain with anterior up. Scale bars:
+100 µm.
+
+\textbf{Figure 5: miR-9 controls retinal vasculature development}
+
+(\textbf{A}) Confocal section of double \emph{in situ}/immunolabelling
+showing extensive overlap (arrowheads) in the expression of endogenous
+\emph{miR-9} and EGFP protein in \emph{Tg(CNE1:egfp)} retina at 72 hpf.
+(\textbf{B}) Whole-mount \emph{in situ} hybridization against
+\emph{miR-9-5} in control and ∆CNE1 mutant retina at 72 hpf. In 88\% of
+the mutant retinas (n=43), \emph{miR-9-5} expression is reduced
+(compared to 6\% in the control larvae (n=34)). (\textbf{C}) Confocal
+projections of mCherry immunolabelling in \emph{Tg(kdrl:mCherry)} retina
+at 72 hpf showing hyaloid vasculature formation in control MO and miR-9
+MO injected larvae. (\textbf{D}) Quantification of the hyaloid
+vasculature network organization observed in the control MO or the miR-9
+MO at 72 hpf. A minimum of 24 retinas was analyzed for each context.
+Dorsal view of the brain with anterior up. Lateral view of the retina.
+Scale bars: 100 µm (B) or 10 µm (A, C). Error bars represent s.d.
+*\emph{P}\textless{}0.05, **\emph{P}\textless{}0.001,
+***\emph{P}\textless{}0.0005, determined by \emph{t}-test.
+
+\textbf{Figure S1: Functional validation of conserved CNEs enhancer
+activity }
+
+\textbf{(A)} Confocal section of double immunolabelling showing the
+expression of EGFP in the notochord of \emph{Tg(CNE10:egfp)} embryos at
+24 hpf (HuC/D in red shows the spinal cord). (\textbf{B}) The sequence
+surrounding rs17421627 and the protective allele are conserved during
+the evolution in human CNE1 (948 bp; hg19.chr5:87,847,186-87,848,133)
+and zebrafish CNE1 (860 bp; danRer7.chr5:49,927,812-49,928,671).
+(\textbf{C}) The human and zebrafish gene neighborhoods surrounding
+CNE1/rs17421627 contain three orthologous and conserved genes:
+\emph{TMEM161B}, \emph{MEF2C} and \emph{MIR9-2}. The CNE1/SNP pair is
+marked by H3K4me1 and DNase signals in both human fetal brain and
+neuronal progenitors. Scale bars: 100 µm.
+
+\textbf{Figure S2:} Multi-species alignment of the deeply conserved
+sequence of CNE1 (473 bp; danRer7. chr5:49,928,049-49,928,521).
+
+\textbf{Figure S3: \emph{miR-9} expression in embryonic and adult CNS.}
+
+\textbf{(A)} Whole-mount in situ hybridization against \emph{miR-9}
+showing the time course of \emph{miR-9} expression in the developing
+embryo at 24, 36 and 48 hpf. (\textbf{B}) Whole-mount in situ
+hybridization against \emph{miR-9} in the adult zebrafish brain.
+(\textbf{C, D}) Confocal section of double \emph{in
+situ}/immunolabelling showing extensive overlap in the expression of
+endogenous \emph{miR-9} and EGFP protein in the hindbrain at 72 hpf (C)
+or in the ventricular zone of the adult zebrafish telencephalon (D) in
+the \emph{Tg(CNE1:egfp)} line. Dorsal view of the brain with anterior
+up. Lateral view of the retina. Scale bars: 100 µm (A, B and D) or 10 µm
+(C).
+
+\textbf{Figure S4: \emph{miR-9} expression is not detected in
+endothelial cells or blood vessels. }
+
+\textbf{(A, B)} Confocal sections of double \emph{in
+situ}/immunolabelling in \emph{Tg(kdrl:egfp)} embryos at 48 hpf showing
+the absence of co-localization in the expression of the endogenous
+\emph{miR-9} and EGFP protein in the retina \textbf{(A)} and the
+hindbrain \textbf{(B)}. Dorsal view of the brain with anterior up.
+Lateral view of the retina. \textbf{(C)} Schematic representation of the
+miR-9 MO binding to microRNA-9. With the control MO, miR-9 is freely
+available, allowing the degradation of the mRNA target and revealing the
+\emph{miR-9} expression pattern with the specific miR-9 LNA probe. In
+presence of the miR-9 MO, \emph{miR-9} is bound by the MO, inhibiting
+the mRNA degradation and the binding of the LNA probe. miR-9 morphant
+larvae show no obvious defects in the brain and eye morphogenesis
+compared to the control MO. Scale bars: 100 µm.
+
+\textbf{Figure S5:} The cumulative number of GWAS SNPs embedded in
+non-coding sequences conserved to zebrafish grows each year, driven by
+the growth of the GWAS Catalog.
+
+\textbf{Table S1:} Sequence conservation blocks and gene synteny of GWAS
+SNPs conserved between human and zebrafish.\textbf{\\
+}
+
+\textbf{AUTHORS CONTRIBUTIONS}
+
+J.H.N., C.C.C and G.B designed the computational study, wrote the
+algorithms and analyzed the data. R.M and P.M designed and analyzed
+\emph{in vivo} experiments. R.M., G.S. and C.H. performed in vivo
+experiments. M.A.K. advised on the study. R.M., J.H.N., G.B. and P.M
+wrote the manuscript.
+
+\textbf{ACKNOWLEDGEMENT}
+
+We are grateful to Drs. Laure Bally-Cuif, Thomas S. Becker and Ben A.
+Barres for critical reading of the manuscript. We thank Steven Sloan,
+Louis Leung, Aaron Wenger, Geetu Tuteja, Harendra Guturu and Karen
+Mrukfor insightful discussions and help. We are grateful to Neil C. Chi,
+David Traver, Nathan Lawson and William S. Talbot for gift of reagents
+or helpful discussions. We would also like to thank the Stanford CSIF
+Imaging platform.
+
+\textbf{FUNDING}
+
+This work was supported by grants from the National Institute of Health:
+R.M., G.S., C.H. and P.M. (NS062798, DK090065 and MH099647), J.H.N.,
+C.C.C and G.B (HG005058). R.M was also supported by EMBO Long Term
+Fellowship (ALTF 413-2012), J.H.N. by National Science Foundation
+Fellowship (DGE-1147470) and a Bio-X Stanford Interdisciplinary Graduate
+Fellowship and G.B by a Packard Fellowship.\textbf{\\
+REFERENCES}
+
+\protect\hypertarget{_ENREF_1}{}{}Bonev B, Pisco A, Papalopulu N. 2011.
+MicroRNA-9 reveals regional diversity of neural progenitors along the
+anterior-posterior axis. \emph{Developmental cell} \textbf{20}: 19-32.
+
+\protect\hypertarget{_ENREF_2}{}{}Chi NC, Shaw RM, De Val S, Kang G, Jan
+LY, Black BL, Stainier DY. 2008. Foxn4 directly regulates tbx2b
+expression and atrioventricular canal formation. \emph{Genes \&
+development} \textbf{22}: 734-739.
+
+\protect\hypertarget{_ENREF_3}{}{}Choi J, Dong L, Ahn J, Dao D,
+Hammerschmidt M, Chen JN. 2007. FoxH1 negatively modulates flk1 gene
+expression and vascular formation in zebrafish. \emph{Developmental
+biology} \textbf{304}: 735-744.
+
+\protect\hypertarget{_ENREF_4}{}{}Coolen M, Katz S, Bally-Cuif L. 2013.
+miR-9: a versatile regulator of neurogenesis. \emph{Frontiers in
+cellular neuroscience} \textbf{7}: 220.
+
+\protect\hypertarget{_ENREF_5}{}{}Coolen M, Thieffry D, Drivenes O,
+Becker TS, Bally-Cuif L. 2012. miR-9 controls the timing of neurogenesis
+through the direct inhibition of antagonistic factors.
+\emph{Developmental cell} \textbf{22}: 1052-1064.
+
+\protect\hypertarget{_ENREF_6}{}{}Flicek P, Amode MR, Barrell D, Beal K,
+Billis K, Brent S, Carvalho-Silva D, Clapham P, Coates G, Fitzgerald S
+et al. 2014. Ensembl 2014. \emph{Nucleic acids research} \textbf{42}:
+D749-755.
+
+\protect\hypertarget{_ENREF_7}{}{}Hiller M, Agarwal S, Notwell JH,
+Parikh R, Guturu H, Wenger AM, Bejerano G. 2013. Computational methods
+to detect conserved non-genic elements in phylogenetically isolated
+genomes: application to zebrafish. \emph{Nucleic acids research}
+\textbf{41}: e151.
+
+\protect\hypertarget{_ENREF_8}{}{}Hindorff LA, Sethupathy P, Junkins HA,
+Ramos EM, Mehta JP, Collins FS, Manolio TA. 2009. Potential etiologic
+and functional implications of genome-wide association loci for human
+diseases and traits. \emph{Proceedings of the National Academy of
+Sciences of the United States of America} \textbf{106}: 9362-9367.
+
+\protect\hypertarget{_ENREF_9}{}{}Ikram MK, Sim X, Jensen RA, Cotch MF,
+Hewitt AW, Ikram MA, Wang JJ, Klein R, Klein BE, Breteler MM et al.
+2010. Four novel Loci (19q13, 6q24, 12q24, and 5q14) influence the
+microcirculation in vivo. \emph{PLoS genetics} \textbf{6}: e1001184.
+
+\protect\hypertarget{_ENREF_10}{}{}Jackson HE, Ono Y, Wang X, Elworthy
+S, Cunliffe VT, Ingham PW. 2015. The role of Sox6 in zebrafish muscle
+fiber type specification. \emph{Skeletal muscle} \textbf{5}: 2.
+
+\protect\hypertarget{_ENREF_11}{}{}Karali M, Persico M, Mutarelli M,
+Carissimo A, Pizzo M, Singh Marwah V, Ambrosio C, Pinelli M, Carrella D,
+Ferrari S et al. 2016. High-resolution analysis of the human retina
+miRNome reveals isomiR variations and novel microRNAs. \emph{Nucleic
+acids research} doi:10.1093/nar/gkw039.
+
+\protect\hypertarget{_ENREF_12}{}{}Karolchik D, Barber GP, Casper J,
+Clawson H, Cline MS, Diekhans M, Dreszer TR, Fujita PA, Guruvadoo L,
+Haeussler M et al. 2014. The UCSC Genome Browser database: 2014 update.
+\emph{Nucleic acids research} \textbf{42}: D764-770.
+
+\protect\hypertarget{_ENREF_13}{}{}Kikuta H, Laplante M, Navratilova P,
+Komisarczuk AZ, Engstrom PG, Fredman D, Akalin A, Caccamo M, Sealy I,
+Howe K et al. 2007. Genomic regulatory blocks encompass multiple
+neighboring genes and maintain conserved synteny in vertebrates.
+\emph{Genome research} \textbf{17}: 545-555.
+
+\protect\hypertarget{_ENREF_14}{}{}Kimmel CB, Ballard WW, Kimmel SR,
+Ullmann B, Schilling TF. 1995. Stages of embryonic development of the
+zebrafish. \emph{Dev Dyn} \textbf{203}: 253-310.
+
+\protect\hypertarget{_ENREF_15}{}{}Kwan KM, Fujimoto E, Grabher C,
+Mangum BD, Hardy ME, Campbell DS, Parant JM, Yost HJ, Kanki JP, Chien
+CB. 2007. The Tol2kit: a multisite gateway-based construction kit for
+Tol2 transposon transgenesis constructs. \emph{Dev Dyn} \textbf{236}:
+3088-3099.
+
+\protect\hypertarget{_ENREF_16}{}{}Leucht C, Stigloher C, Wizenmann A,
+Klafke R, Folchert A, Bally-Cuif L. 2008. MicroRNA-9 directs late
+organizer activity of the midbrain-hindbrain boundary. \emph{Nature
+neuroscience} \textbf{11}: 641-648.
+
+\protect\hypertarget{_ENREF_17}{}{}Lin Q, Schwarz J, Bucana C, Olson EN.
+1997. Control of mouse cardiac morphogenesis and myogenesis by
+transcription factor MEF2C. \emph{Science} \textbf{276}: 1404-1407.
+
+\protect\hypertarget{_ENREF_18}{}{}Masai I, Heisenberg CP, Barth KA,
+Macdonald R, Adamek S, Wilson SW. 1997. floating head and masterblind
+regulate neuronal patterning in the roof of the forebrain. \emph{Neuron}
+\textbf{18}: 43-57.
+
+\protect\hypertarget{_ENREF_19}{}{}McGeechan K, Liew G, Macaskill P,
+Irwig L, Klein R, Klein BE, Wang JJ, Mitchell P, Vingerling JR, de Jong
+PT et al. 2009a. Prediction of incident stroke events based on retinal
+vessel caliber: a systematic review and individual-participant
+meta-analysis. \emph{American journal of epidemiology} \textbf{170}:
+1323-1332.
+
+\protect\hypertarget{_ENREF_20}{}{}McGeechan K, Liew G, Macaskill P,
+Irwig L, Klein R, Klein BE, Wang JJ, Mitchell P, Vingerling JR, Dejong
+PT et al. 2009b. Meta-analysis: retinal vessel caliber and risk for
+coronary heart disease. \emph{Annals of internal medicine} \textbf{151}:
+404-413.
+
+\protect\hypertarget{_ENREF_21}{}{}Nepal C, Coolen M, Hadzhiev Y,
+Cussigh D, Mydel P, Steen VM, Carninci P, Andersen JB, Bally-Cuif L,
+Muller F et al. 2015. Transcriptional, post-transcriptional and
+chromatin-associated regulation of pri-miRNAs, pre-miRNAs and moRNAs.
+\emph{Nucleic acids research} doi:10.1093/nar/gkv1354.
+
+\protect\hypertarget{_ENREF_22}{}{}Nicolae DL, Gamazon E, Zhang W, Duan
+S, Dolan ME, Cox NJ. 2010. Trait-associated SNPs are more likely to be
+eQTLs: annotation to enhance discovery from GWAS. \emph{PLoS genetics}
+\textbf{6}: e1000888.
+
+\protect\hypertarget{_ENREF_23}{}{}Oliver PL, Chodroff RA, Gosal A,
+Edwards B, Cheung AF, Gomez-Rodriguez J, Elliot G, Garrett LJ, Lickiss
+T, Szele F et al. 2015. Disruption of Visc-2, a Brain-Expressed
+Conserved Long Noncoding RNA, Does Not Elicit an Overt Anatomical or
+Behavioral Phenotype. \emph{Cerebral cortex} \textbf{25}: 3572-3585.
+
+\protect\hypertarget{_ENREF_24}{}{}Oxtoby E, Jowett T. 1993. Cloning of
+the zebrafish krox-20 gene (krx-20) and its expression during hindbrain
+development. \emph{Nucleic acids research} \textbf{21}: 1087-1095.
+
+\protect\hypertarget{_ENREF_25}{}{}Rodriguez A, Griffiths-Jones S,
+Ashurst JL, Bradley A. 2004. Identification of mammalian microRNA host
+genes and transcription units. \emph{Genome research} \textbf{14}:
+1902-1910.
+
+\protect\hypertarget{_ENREF_26}{}{}Schizophrenia Working Group of the
+Psychiatric Genomics C. 2014. Biological insights from 108
+schizophrenia-associated genetic loci. \emph{Nature} \textbf{511}:
+421-427.
+
+\protect\hypertarget{_ENREF_27}{}{}Sherry ST, Ward MH, Kholodov M, Baker
+J, Phan L, Smigielski EM, Sirotkin K. 2001. dbSNP: the NCBI database of
+genetic variation. \emph{Nucleic acids research} \textbf{29}: 308-311.
+
+\protect\hypertarget{_ENREF_28}{}{}Shibata M, Nakao H, Kiyonari H, Abe
+T, Aizawa S. 2011. MicroRNA-9 regulates neurogenesis in mouse
+telencephalon by targeting multiple transcription factors. \emph{The
+Journal of neuroscience : the official journal of the Society for
+Neuroscience} \textbf{31}: 3407-3422.
+
+\protect\hypertarget{_ENREF_29}{}{}Sim X, Jensen RA, Ikram MK, Cotch MF,
+Li X, MacGregor S, Xie J, Smith AV, Boerwinkle E, Mitchell P et al.
+2013. Genetic loci for retinal arteriolar microcirculation. \emph{PloS
+one} \textbf{8}: e65804.
+
+\protect\hypertarget{_ENREF_30}{}{}Sivak JM, Petersen LF, Amaya E. 2005.
+FGF signal interpretation is directed by Sprouty and Spred proteins
+during mesoderm formation. \emph{Developmental cell} \textbf{8}:
+689-701.
+
+\protect\hypertarget{_ENREF_31}{}{}Spieler D, Kaffe M, Knauf F, Bessa J,
+Tena JJ, Giesert F, Schormair B, Tilch E, Lee H, Horsch M et al. 2014.
+Restless legs syndrome-associated intronic common variant in Meis1
+alters enhancer function in the developing telencephalon. \emph{Genome
+research} \textbf{24}: 592-603.
+
+\protect\hypertarget{_ENREF_32}{}{}Tuupanen S, Turunen M, Lehtonen R,
+Hallikas O, Vanharanta S, Kivioja T, Bjorklund M, Wei G, Yan J,
+Niittymaki I et al. 2009. The common colorectal cancer predisposition
+SNP rs6983267 at chromosome 8q24 confers potential to enhanced Wnt
+signaling. \emph{Nature genetics} \textbf{41}: 885-890.
+
+\protect\hypertarget{_ENREF_33}{}{}Varshney GK, Pei W, LaFave MC, Idol
+J, Xu L, Gallardo V, Carrington B, Bishop K, Jones M, Li M et al. 2015.
+High-throughput gene targeting and phenotyping in zebrafish using
+CRISPR/Cas9. \emph{Genome research} \textbf{25}: 1030-1042.
+
+\protect\hypertarget{_ENREF_34}{}{}Wang JJ, Liew G, Klein R, Rochtchina
+E, Knudtson MD, Klein BE, Wong TY, Burlutsky G, Mitchell P. 2007.
+Retinal vessel diameter and cardiovascular mortality: pooled data
+analysis from two older populations. \emph{European heart journal}
+\textbf{28}: 1984-1992.
+
+\protect\hypertarget{_ENREF_35}{}{}Wheeler TJ, Eddy SR. 2013. nhmmer:
+DNA homology search with profile HMMs. \emph{Bioinformatics}
+\textbf{29}: 2487-2489.
+
+\protect\hypertarget{_ENREF_36}{}{}Zhang H, Qi M, Li S, Qi T, Mei H,
+Huang K, Zheng L, Tong Q. 2012. microRNA-9 targets matrix
+metalloproteinase 14 to inhibit invasion, metastasis, and angiogenesis
+of neuroblastoma cells. \emph{Molecular cancer therapeutics}
+\textbf{11}: 1454-1466.
+
+\protect\hypertarget{_ENREF_37}{}{}Zhang Y, Sloan SA, Clarke LE, Caneda
+C, Plaza CA, Blumenthal PD, Vogel H, Steinberg GK, Edwards MS, Li G et
+al. 2016. Purification and Characterization of Progenitor and Mature
+Human Astrocytes Reveals Transcriptional and Functional Differences with
+Mouse. \emph{Neuron} \textbf{89}: 37-53.
+
+\protect\hypertarget{_ENREF_38}{}{}Zhuang G, Wu X, Jiang Z, Kasman I,
+Yao J, Guan Y, Oeh J, Modrusan Z, Bais C, Sampath D et al. 2012.
+Tumour-secreted miR-9 promotes endothelial cell migration and
+angiogenesis by activating the JAK-STAT pathway. \emph{The EMBO journal}
+\textbf{31}: 3513-3523.
+
+\end{document}

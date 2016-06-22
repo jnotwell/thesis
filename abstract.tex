@@ -7,39 +7,10 @@ This dissertation describes three studies that aim to understand transcriptional
 The neocortex is a mammalian-specific structure that is responsible for higher functions such as cognition, emotion, and perception. To gain insight into its evolution and the gene regulatory codes that pattern it, we studied the overlap of its active developmental enhancers with transposable element families and compared this overlap to uniformly shuffled enhancers. Here we show a striking enrichment of the MER130 repeat family among active enhancers in the mouse dorsal cerebral wall, which gives rise to the neocortex, at embryonic day 14.5 (E14.5). We show that MER130 instances preserve a common code of transcriptional regulatory logic, function as enhancers, and are adjacent to critical neocortical genes. MER130, a nonautonomous interspersed transposable element, originates in the tetrapod or possibly Sarcopterygii ancestor, which far predates the appearance of the neocortex. Our results show that MER130 elements were recruited, likely through their common regulatory logic, as neocortical enhancers.
 %
 
+Exome sequencing studies have identified multiple genes harboring \emph{de novo} loss-of-function (LoF) variants in individuals with autism spectrum disorders (ASD), including \emph{TBR1}, a master regulator of cortical development. We performed ChIP-seq for TBR1 during mouse cortical neurogenesis and show that TBR1-bound regions are enriched adjacent to ASD genes. ASD genes were also enriched among genes that are differentially expressed in \emph{Tbr1} knockouts, which together with the ChIP-seq data, suggests direct transcriptional regulation. Of the 9 ASD genes examined, 7 were misexpressed in the cortices of \emph{Tbr1} knockout mice, including 6 with increased expression in the deep cortical layers. ASD genes with adjacent cortical TBR1 ChIP-seq peaks also showed unusually low levels of LoF mutations in a reference human population and among Icelanders. We then leveraged TBR1 binding to identify an appealing subset of candidate ASD genes. Our findings highlight a TBR1-regulated network of ASD genes in the developing neocortex that are relatively intolerant to LoF mutations, indicating that these genes may play critical roles in normal cortical development.
+%
+
+More than 90\% of human disease-associated mutations lie in non-genic regions of the genome, presenting a challenge for interpretation. We report a screen to identify GWAS SNPs embedded in deeply conserved non-coding DNA elements (CNE) preserved syntenically across vertebrates. We found 22 CNE/SNP pairs covering a wide range of human diseases and validated a subset for enhancer activity and SNP regulatory function, including CNE1/SNP rs17421627 associated with retinal vasculature defects. Zebrafish CNE1:EGFP transgenics revealed human CNE1 enhancer activity in the retina. CRISPR/Cas-9 deletion of CNE1 in the zebrafish genome led to defects in blood vessel development in the retina, suggesting that CNE1 enhancer is functionally associated with retinal vascular caliber in humans. Introducing the risk mutation in CNE1 abolished EGFP expression, indicating that SNP rs17421627 is likely the causal mutation responsible for the human phenotype. Validating our prediction, we identified the target gene \emph{cis}-regulated by CNE1/rs17421627: the neurogenesis modulator, microRNA-9. Consistent with the GWAS studies, miR-9 depletion also led to retinal vasculature defects, demonstrating that \emph{miR-9} is the conserved gene functionally associated with retinal blood vessel development. This study validates our \emph{in silico} approach to identify conserved enhancers regulated by GWAS SNPs and demonstrates how the combination of human and zebrafish genetics reveals enhancer function, the regulatory activity of the SNP, the \emph{cis}-regulated gene, and the biological processes disrupted in the associated disorders.
+%
+
 These studies demonstrate how genomics can extend our understanding of different diseases by offering strategies for combining human genetics and developmental biology to reveal their precise mechanism of action.
-
-Much of the functional sequence in the human genome is devoted to regulatory elements, which control when during development and where in the body genes are active.  \textit{Cis}-regulatory elements have been shown to contribute to human evolution and disease, but the function of most regulatory elements in the human genome is unannotated, and the grammatical rules for how regulatory function is encoded in DNA sequence are unknown.  This dissertation describes the application of a suite of novel computational genomics tools in 1) a genome-wide screen to broadly annotate the binding site composition and biological function of regulatory elements in the human and mouse genomes, and 2) a study of development of the mouse neocortex, a mammalian-specific brain region that underlies higher cognitive functions.
-%
-
-The genome-wide screen, termed PRISM for ``Predicting Regulatory Information from Single Motifs'', combines accurate transcription factor binding site prediction using a novel ``excess conservation score'' with GREAT, a tool for functional enrichment analysis of regulatory regions.  The
-excess conservation score identifies binding sites that are conserved more
-strongly than surrounding nucleotides, a signature which suggests specific
-evolutionary constraint on the binding site.  Binding site prediction with
-the excess conservation score outperforms the previous state-of-the-art for
-44 of 47 examined transcription factors.  The genome-wide PRISM screen identifies a biological function
-for 109,748 mostly distal binding sites in regulatory elements associated with 7,692
-different target genes at an overall false discovery rate of 15\%.  Many of
-the predictions are supported by prior literature, but the majority of predictions
-are novel and thus provide hypotheses for further experimental study.  A web
-portal -- http://PRISM.stanford.edu -- presents the data to biomedical researchers.
-%
-
-The case study of neocortex development combines computational analysis of
-regulatory elements with high-throughput sequencing techniques to uncover
-gene interaction networks in a rapid, non-targeted manner that is not
-possible with classical genetics methods.  ChIP-seq for the enhancer-associated
-co-activator protein p300 in dissected neocortex from E14.5 mouse embryos
-identifies 6,629 candidate enhancer regions.  The candidate enhancers are
-enriched near genes expressed in E14.5 neocortex and important to neocortex development.
-Eight of ten candidates tested in a mouse transgenic enhancer assay drive activity in
-specific patterns within the neocortex.  Surprisingly, 23\% of the 6,629 candidates
-are evolutionarily conserved beyond mammals and thus pre-date the mammalian innovation of
-the neocortex.  Motif analysis identifies \textit{Neurod}, \textit{Lhx/Lmx}, \textit{Nfi},
-\textit{Rfx}, and \textit{Ctcf}
-motifs enriched within the candidate enhancers, and the motifs are connected to specific
-functions and diseases.  I propose an approach to utilize such a combination of
-computational binding site analysis and functional genomics enhancer assays
-to identify tissue-specific gene regulatory networks.  I demonstrate the approach by
-predicting targets of \textit{Rbpj}.
-
