@@ -6,8 +6,4 @@ http://help-csli.stanford.edu/tex/suthesis/
 
 Copied from Aaron Wenger's 2014 thesis.
 
-jnotwellThesis.tex is the main document.  Each chapter is in a separate .tex.
-
-
-To compile and build the entire document, run the following commands:
-make clean; make
+main.tex is the main document.  Each chapter is in a separate .tex.
